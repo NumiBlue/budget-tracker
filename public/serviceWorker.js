@@ -1,5 +1,5 @@
 const appName = "Budget-Tracker";
- const version = "v1";
+ const version = "v3";
  const CACHE_NAME = appName + version;
  const CACHE_FILES = [
    "./index.html",
@@ -35,5 +35,18 @@ self.addEventListener("install", function (event) {
       self.addEventListener("fetch", function (event) {
         console.log("Offline: Service Worker Fetching files");
       });
+    })
+  );
+
+  // Fetch Cached Files
+  event.respondWith(
+    caches.match(event.request).then(function (request) {
+      if (request) {
+        // If there is cache, return the response cache...
+        return request;
+      } else {
+        // Else- try fetching request
+        return fetch(event.request);
+      }
     })
   );
