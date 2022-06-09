@@ -42,10 +42,10 @@ self.addEventListener("install", function (event) {
   event.respondWith(
     caches.match(event.request).then(function (request) {
       if (request) {
-        // If there is cache, return the response cache...
+        // If there is cache, return cache
         return request;
       } else {
-        // Else- try fetching request
+        // Else- fetch
         return fetch(event.request);
       }
     })
