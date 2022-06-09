@@ -124,6 +124,19 @@ if (!isAdding) {
 nameEl.value = "";
 amountEl.value = "";
 });
+}
+
+function clearAll() {
+    fetch("/api/transaction/deleteAll", {
+      method: "DELETE",
+    })
+      .then((response) => {
+        return console.log("Old Budget Deleted");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    document.location.reload();
   }
 
   document.querySelector("#add-btn").onclick = function () {
@@ -135,6 +148,6 @@ amountEl.value = "";
   };
  
   document.querySelector("#clear-btn").onclick = function () {
-    console.log("Clearing transactions");
-    // clearTransactions();
+    console.log("CRemoving transactions");
+    clearAll();
   };
