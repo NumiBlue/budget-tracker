@@ -18,3 +18,22 @@ self.addEventListener("install", function (event) {
   self.addEventListener("activate", function (event) {
     console.log("Service worker activated!");
   });
+
+  //Remove old cache
+  // Remove unwanted caches
+  event.waitUntil(
+      //figure out why depricated
+    caches.keys().then(function (cacheNames) {
+      return Promise.all(
+        cacheNames.filter(function (cache) {
+          if (cache !== CACHE_NAME) {
+            console.log("Cleaning Cache");
+            return caches.delete(cache);
+          }
+        })
+      );
+      self.addEventListener("fetch", function (event) {
+        console.log("Offline: Service Worker Fetching files");
+      });
+    })
+  );
