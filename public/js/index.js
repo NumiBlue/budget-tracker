@@ -72,3 +72,58 @@ let transactions = [];
     },
   });
 }
+if (nameEl.value === "" || amountEl.value === "") {
+    errorEl.textContent = "Missing Information";
+    return;
+  } else {
+    errorEl.textContent = "";
+}
+
+// create record
+let transaction = {
+  name: nameEl.value,
+  value: amountEl.value,
+  date: new Date().toISOString(),
+};
+// go into negatives
+if (!isAdding) {
+    transaction.value *= -1;
+  }
+  // add to current array of data
+  transactions.unshift(transaction);
+  // run logic again
+   populateChart();
+   populateTable();
+   populateTotal();
+
+   //send to server
+   fetch("/api/transaction", {
+    method: "POST",
+    body: JSON.stringify(transaction),
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+    },
+   })
+   .then((response) => {
+    return response.json();
+  })
+  .then((data) => {
+    if (data.errors) {
+      errorEl.textContent = "Missing Information";
+    } else {
+      // clear form
+      nameEl.value = "";
+      amountEl.value = "";
+    }
+  })
+  .catch((err) => {
+    // if fetch fails, save
+    saveRecord(transaction);
+// clear form
+nameEl.value = "";
+amountEl.value = "";
+});
+  }
+
+  
