@@ -1,0 +1,9 @@
+{
+    "name": "Budget-Tracker",
+    "short_name": "Budgeting!",
+    "icons": [],
+    "theme_color": "#556be6",
+    "background_color": "#e6e7ed", 
+    "start_url": "../index.html",
+    "display": "standalone"
+}
